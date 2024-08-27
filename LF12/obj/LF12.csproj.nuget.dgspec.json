@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Daten\\Schule\\Lernfeld 12\\repos\\LF12\\LF12.csproj": {}
+    "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj": {}
   },
   "projects": {
-    "C:\\Daten\\Schule\\Lernfeld 12\\repos\\LF12\\LF12.csproj": {
+    "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Daten\\Schule\\Lernfeld 12\\repos\\LF12\\LF12.csproj",
+        "projectUniqueName": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
         "projectName": "LF12",
-        "projectPath": "C:\\Daten\\Schule\\Lernfeld 12\\repos\\LF12\\LF12.csproj",
+        "projectPath": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
         "packagesPath": "C:\\Users\\Dietrich\\.nuget\\packages\\",
-        "outputPath": "C:\\Daten\\Schule\\Lernfeld 12\\repos\\LF12\\obj\\",
+        "outputPath": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Dietrich\\AppData\\Roaming\\NuGet\\NuGet.Config",
