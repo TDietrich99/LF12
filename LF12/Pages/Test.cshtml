@@ -1,0 +1,20 @@
+﻿@page
+@model TestModel
+@{
+    ViewData["Title"] = Model.GetTitle();
+    
+}
+
+@for(int i = 0; i<20; i++)
+{
+    <div class="Person">
+        <span>@i</span>
+    </div>
+}
+
+@foreach(Uber u in Model.GetUbers(10))
+{
+    <div class="@u.Title">
+        <span>@u.Description</span>
+    </div>
+}
