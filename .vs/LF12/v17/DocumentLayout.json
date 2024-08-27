@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\pages\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\lf12.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\lf12.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
@@ -13,14 +21,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\test.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\pages\\test.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\pages\\test.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|solutionrelative:lf12\\pages\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{41A20411-18D7-4EC5-8A49-8BC16EEF4B00}|LF12\\LF12.csproj|c:\\daten\\schule\\lernfeld 12\\lf12 repos\\lf12\\pages\\index.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,21 +34,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "LF12",
-              "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
-              "RelativeDocumentMoniker": "LF12\\LF12.csproj",
-              "ToolTip": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
-              "RelativeToolTip": "LF12\\LF12.csproj",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-08-27T10:00:02.313Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
@@ -67,7 +54,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "LF12",
+              "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
+              "RelativeDocumentMoniker": "LF12\\LF12.csproj",
+              "ToolTip": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 repos\\LF12\\LF12.csproj",
+              "RelativeToolTip": "LF12\\LF12.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-08-27T10:00:02.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\Pages\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "LF12\\Pages\\Shared\\_Layout.cshtml",
@@ -80,19 +80,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Test.cshtml",
               "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\Pages\\Test.cshtml",
               "RelativeDocumentMoniker": "LF12\\Pages\\Test.cshtml",
               "ToolTip": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\Pages\\Test.cshtml",
               "RelativeToolTip": "LF12\\Pages\\Test.cshtml",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAAcAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-27T09:30:59.934Z"
+              "WhenOpened": "2024-08-27T09:30:59.934Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Test.cshtml.cs",
               "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\Pages\\Test.cshtml.cs",
               "RelativeDocumentMoniker": "LF12\\Pages\\Test.cshtml.cs",
@@ -104,7 +105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\Pages\\Index.cshtml",
               "RelativeDocumentMoniker": "LF12\\Pages\\Index.cshtml",
@@ -112,7 +113,8 @@
               "RelativeToolTip": "LF12\\Pages\\Index.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAowAUAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-08-27T09:25:21.216Z"
+              "WhenOpened": "2024-08-27T09:25:21.216Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
