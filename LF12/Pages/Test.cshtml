@@ -4,17 +4,17 @@
     ViewData["Title"] = Model.GetTitle();
     
 }
-
+@(Html.Raw(Model.penis()))
 @for(int i = 0; i<20; i++)
 {
     <div class="Person">
         <span>@i</span>
     </div>
 }
-
+<button type="submit" value="lol">Lul</button>
 @foreach(Uber u in Model.GetUbers(10))
 {
     <div class="@u.Title">
-        <span>@u.Description ;</span>
+        <span>@u.Description sfs </span>
     </div>
 }

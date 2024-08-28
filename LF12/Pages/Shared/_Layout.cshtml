@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/LF12.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <form method="post">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
@@ -50,5 +51,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
+    </form>
 </body>
 </html>

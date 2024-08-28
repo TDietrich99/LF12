@@ -1,10 +1,13 @@
+using LF12.Classes;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Hosting;
 
 namespace LF12.Pages
 {
-    public class TestModel : PageModel
+    public class TestModel : BaseModel
     {
+        protected string Lol = "LOLOLOLOLOL";
         private readonly ILogger<TestModel> _logger;
 
         public TestModel(ILogger<TestModel> logger)
@@ -20,8 +23,17 @@ namespace LF12.Pages
             }
             return ret;
         }
-
-        public string GetTitle()
+        public string penis()
+        {
+            return Lol;
+        }
+        public async Task OnPostAsync()
+        {
+            this.Lol = "nö";
+            var x = 4;
+            return;
+        }
+        protected override string GetTitle()
         {
             return "Test";
         }
