@@ -1,0 +1,59 @@
+﻿@model LF12.Classes.Models.ImageUploadModel
+
+@{
+    ViewData["Title"] = "Kreuzworträtsel-Lösung";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="display-4">Riddle-Riddler</h1>
+            <p class="lead">Laden Sie ein Bild Ihres Kreuzworträtsels hoch und sehen Sie sich die Lösungen an.</p>
+
+            @if (!string.IsNullOrEmpty(Model.Message))
+            {
+                <div class="alert alert-info mt-4">@Model.Message</div>
+            }
+
+            <form method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload" id="uploadForm">
+                <div class="form-group">
+                    <label for="upload" class="btn btn-primary btn-lg">
+                        Bild hochladen
+                    </label>
+                    <input type="file" id="upload" name="uploadedImage" class="d-none" accept="image/*" onchange="previewImage(event)">
+                </div>
+                <div id="imagePreviewContainer" style="display: none;" class="mt-4">
+                    <img id="imagePreview" alt="Bildvorschau" class="img-fluid" />
+                </div>
+                <button type="submit" id="submitButton" class="btn btn-success btn-lg mt-3" style="display: none;">Lösungen anzeigen</button>
+            </form>
+
+            @if (!string.IsNullOrEmpty(Model.FileName))
+            {
+                <div class="mt-4">
+                    <h3>Hochgeladenes Bild:</h3>
+                    <p>@Model.FileName</p>
+                    <p>@Model.FilePath</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            var preview = document.getElementById('imagePreview');
+            preview.src = reader.result;
+            document.getElementById('imagePreviewContainer').style.display = 'block';
+            document.getElementById('submitButton').style.display = 'inline-block'; // Button sichtbar machen
+        };
+
+        if (input.files && input.files[0]) {
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
