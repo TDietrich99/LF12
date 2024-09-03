@@ -1,0 +1,55 @@
+﻿using LF12.Classes.Models;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace LF12.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly IWebHostEnvironment _hostEnvironment;
+
+        public HomeController(IWebHostEnvironment hostEnvironment)
+        {
+            _hostEnvironment = hostEnvironment;
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View(new ImageUploadModel());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile uploadedImage)
+        {
+            var model = new ImageUploadModel();
+
+            if (uploadedImage != null && uploadedImage.Length > 0)
+            {
+                var uploadPath = Path.Combine(_hostEnvironment.ContentRootPath, "images");
+                var fileName = Path.GetFileName(uploadedImage.FileName);
+                var filePath = Path.Combine(uploadPath, fileName);
+
+                // Speichere das Bild im Ordner "wwwroot/images"
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await uploadedImage.CopyToAsync(fileStream);
+                }
+
+                model.FileName = fileName;
+                model.Message = "Bild erfolgreich hochgeladen!";
+                model.FilePath = filePath;
+            }
+            else
+            {
+                model.Message = "Es wurde kein Bild hochgeladen.";
+            }
+
+            // Rückgabe an die Index-View
+            return View("Index", model);
+        }
+    }
+}
