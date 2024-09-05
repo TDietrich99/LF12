@@ -4,12 +4,174 @@ using Emgu.CV.Structure;
 using System.Drawing;
 using Tesseract;
 using Microsoft.Extensions.Hosting;
+using Emgu.CV.Util;
 
 namespace LF12.Classes.Classes
 {
     public class ImageHelper
     {
+      
+        public static int NoiseReduction = 5;
         public static string SolutionPath = Path.Combine("Images", "Solution");
+        #region Arrow Detect
+
+        public static List<Arrow>? DetectArrows(CrossGridTile tile, CrossGrid grid)
+        {
+            List<Arrow>? ret = null;
+            string imagePath = tile.FilePath;
+            Mat img = CvInvoke.Imread(imagePath, ImreadModes.Grayscale);
+            // Binarisierung
+            CvInvoke.Threshold(img, img, 128, 255, ThresholdType.Binary);
+            // Kanten erkennen
+            Mat edges = new Mat();
+            CvInvoke.Canny(img, edges, 50, 150);
+
+            // Konturen finden
+            VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint();
+            CvInvoke.FindContours(edges, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
+            for (int i = 0; i < contours.Size; i++)
+            {
+                VectorOfPoint contour = contours[i];
+
+                // 5. Begrenzungsrechteck berechnen
+                var rect = CvInvoke.BoundingRectangle(contour);
+
+                // 6. Seitenverhältnis prüfen (evtl. Anpassung je nach Pfeilform nötig)
+                double aspectRatio = Math.Max(rect.Width, rect.Height) / (double)Math.Min(rect.Width, rect.Height);
+                if (aspectRatio > 5 || aspectRatio < 0.2) // Filtern von sehr langen oder flachen Konturen
+                {
+                    continue;
+                }
+
+                // 7. Ecken approximieren, um zu prüfen, ob es sich um einen Pfeil handelt
+                var epsilon = 0.03 * CvInvoke.ArcLength(contour, true);
+                VectorOfPoint approx = new VectorOfPoint();
+                CvInvoke.ApproxPolyDP(contour, approx, epsilon, true);
+
+                List<Point> points = new List<Point>();
+                // Entfernen von nahe beieinandergelegenen Punkten
+                foreach(var a in approx.ToArray())
+                {
+                    if(points.Where(
+                        p=>Math.Abs(p.X-a.X) < ImageHelper.NoiseReduction && 
+                        Math.Abs(p.Y-a.Y) < ImageHelper.NoiseReduction
+                        ).Count() == 0
+                        )
+                    {
+                        points.Add(new Point(a.X, a.Y));
+                    }
+                }
+                var arrow = GetArrow(tile, points, grid);
+                if(arrow != null)
+                {
+                    if(ret == null)
+                    {
+                        ret = new List<Arrow>();
+                    }
+                    ret.Add(arrow);
+                    arrow.ArrowTile = tile;
+                }
+            }
+            return ret;
+        }
+        private static Arrow? GetArrow(CrossGridTile currTile, List<Point> points,CrossGrid grid)
+        {
+            // 3 = Dreieck ; 4 =  Dreieck mit Strich
+            if(points.Count != 3 && points.Count != 4) return null;
+
+            // Alle Punkte bis auf einen liegen ungefähr auf einer Linie
+            // -> entweder X oder Y ist ungefähr gleich
+            foreach (var p in points)
+            {
+                List<Point> matchesX = new List<Point>();
+                //Annahme: Die Basis ist in X Richtung.
+                for (int x = 0; x < points.Count; x++)
+                {
+                    var point = points[x];
+                    if (Math.Abs(point.X - p.X) < ImageHelper.NoiseReduction * 2)
+                    {
+                        matchesX.Add(point);
+                    }
+
+                }
+                // Da alle Punkte bis auf einen auf einer Linie liegen müssen
+                if (matchesX.Count == points.Count - 1)
+                {
+                    var arr = new Arrow();
+                    // Origin liegt direkt Links im Bild
+                    if (matchesX.Any(m=>m.X == 0))
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX - 1 && g.PosY == currTile.PosY).First();
+                    }
+                    // Origin liegt Oben, frei fliegend
+                    else if(matchesX.Any(m=>m.Y == 0))
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX && g.PosY == currTile.PosY - 1).First();
+                    }
+                    // Origin liegt Unten, frei fliegend
+                    else
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX && g.PosY == currTile.PosY + 1).First();
+                    }
+                    Point tip = points.Where(p => !matchesX.Contains(p)).First();
+                    // Pfeil müsste immernach rechts zeigen
+                    if(tip.X > matchesX.First().X)
+                    {
+                        arr.Direction = ArrowDirection.Right;
+                    }
+                    else
+                    {
+                        throw new Exception("Pfeil zeigt nach links????");
+                    }
+                    return arr;
+                }
+                List<Point> matchesY = new List<Point>();
+                //Annahme: Die Basis ist in X Richtung.
+                for (int y = 0; y < points.Count; y++)
+                {
+                    var point = points[y];
+                    if (Math.Abs(point.Y - p.Y) < ImageHelper.NoiseReduction * 2)
+                    {
+                        matchesY.Add(point);
+                    }
+
+                }
+                // Da alle Punkte bis auf einen auf einer Linie liegen müssen
+                if (matchesY.Count == points.Count - 1)
+                {
+                    var arr = new Arrow();
+                    Point tip = points.Where(p => !matchesY.Contains(p)).First();
+                    // Origin liegt direkt oben im Bild (Ansonsten zeigt der Pfeil nach oben)
+                    if (matchesY.All(m => m.Y == 0 ))
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX && g.PosY == currTile.PosY - 1).First();
+                    }
+                    // Origin liegt links im Bild, frei fliegend
+                    else if(matchesY.Any(m=>m.X == 0))
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX - 1 && g.PosY == currTile.PosY).First();
+                    }
+                    // Origin liegt rechts im Bild, frei fliegend
+                    else
+                    {
+                        arr.Origin = grid.Tiles.Where(g => g.PosX == currTile.PosX + 1 && g.PosY == currTile.PosY).First();
+                    }
+                    // Pfeil muss immernach Unten zeigen
+                    if (tip.Y > matchesY.First().Y)
+                    {
+                        arr.Direction = ArrowDirection.Down;
+                    }
+                    else
+                    {
+                        throw new Exception("Pfeil zeigt nach oben?????");
+                    }
+                    return arr;
+                }
+            }
+            return null;
+        }
+        #endregion
+
         #region Border Detect
         public static void CreateTileImages(string imagePath, string totFiles)
         {
@@ -56,10 +218,10 @@ namespace LF12.Classes.Classes
             xCoords.Sort();
             yCoords.Sort();
             // 5. Felder extrahieren und speichern
-            int y = 0;
+            int X = 0;
             for (int i = 0; i < xCoords.Count - 1; i++)
             {
-                int x = 0;
+                int Y = 0;
                 for (int j = 0; j < yCoords.Count - 1; j++)
                 {
                     Rectangle cellRect = new Rectangle(
@@ -72,11 +234,11 @@ namespace LF12.Classes.Classes
                         continue;
                     }
                     Mat cell = new Mat(img, cellRect);
-                    string cellImagePath = $"cell_{PadLeft(y.ToString())}_{PadLeft(x.ToString())}.png";
-                    x++;
+                    string cellImagePath = $"cell_{PadLeft(Y.ToString())}_{PadLeft(X.ToString())}.png";
+                    Y++;
                     SharpenImg(cell, Path.Combine(solutionPath, cellImagePath));
                 }
-                if (x > 0) y++;
+                if (Y > 0) X++;
             }
             return;
         }

@@ -1,23 +1,32 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace LF12.Classes.Classes
 {
     public class CrossGridTile
     {
+        #region Properties
         [JsonPropertyName(nameof(PosX))]
         public int PosX { get; set; }
 
         [JsonPropertyName(nameof(PosY))]
         public int PosY { get; set; }
 
+        [JsonPropertyName(nameof(FilePath))]
+        public string? FilePath { get; set; }
+
         [JsonPropertyName(nameof(TileText))]
         public string? TileText { get; set; }
 
-        [JsonPropertyName(nameof(FilePath))]
-        public string? FilePath { get; set; }
-        public CrossGridTile() { }
+        #endregion
 
+        #region Constructors
+        public CrossGridTile() { }
+        #endregion
+
+        #region Async Methods
         public static async Task<CrossGridTile> CreateInstance(int posx, int posy, string filepath)
         {
             
@@ -33,5 +42,36 @@ namespace LF12.Classes.Classes
             string? text = await ImageHelper.GetText(filepath);
             this.TileText = text;
         }
+        public void SetChar(char c)
+        {
+            this.TileText = c.ToString().ToUpper();
+        }
+        #endregion
+
+        #region Helper Methods
+        public override bool Equals(object? obj)
+        {
+            if(obj != null)
+            {
+                var cobj = obj as CrossGridTile;
+
+                if(cobj != null && cobj.PosX.Equals(this.PosX) && cobj.PosY.Equals(this.PosY))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public char? GetChar()
+        {
+            if (string.IsNullOrWhiteSpace(this.TileText))
+                return '_';
+            if(this.TileText.Length > 1) 
+                return null;
+            return this.TileText[0];
+        }
+        #endregion
+
     }
+
 }

@@ -102,3 +102,4 @@ C:\Daten\Schule\Lernfeld 12\LF12 Repos\LF12\obj\Debug\net8.0\refint\LF12.dll
 C:\Daten\Schule\Lernfeld 12\LF12 Repos\LF12\obj\Debug\net8.0\LF12.pdb
 C:\Daten\Schule\Lernfeld 12\LF12 Repos\LF12\obj\Debug\net8.0\LF12.genruntimeconfig.cache
 C:\Daten\Schule\Lernfeld 12\LF12 Repos\LF12\obj\Debug\net8.0\ref\LF12.dll
+C:\Daten\Schule\Lernfeld 12\LF12 Repos\LF12\bin\Debug\net8.0\Jsons\D1D22F07-6C3F-42B7-B092-B81B8613059D\D1D22F07-6C3F-42B7-B092-B81B8613059D_RAW.json

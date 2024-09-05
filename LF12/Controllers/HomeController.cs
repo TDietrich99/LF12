@@ -20,6 +20,16 @@ namespace LF12.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            bool skip = true;
+            if(!skip)
+                return View(new ImageUploadModel());
+            string guid = "D1D22F07-6C3F-42B7-B092-B81B8613059D";
+            var json = System.IO.File.ReadAllText(Path.Combine("Jsons", guid, $"{guid}_RAW.json"));
+            var cg = CrossGrid.FromJson(json);
+            if (cg != null)
+            {
+                cg.Solve();
+            }
             return View(new ImageUploadModel());
         }
 
@@ -30,6 +40,7 @@ namespace LF12.Controllers
 
             if (uploadedImage != null && uploadedImage.Length > 0)
             {
+
                 var uploadPath = Path.Combine(_hostEnvironment.ContentRootPath, "Images","Uploaded");
                 if (!Directory.Exists(uploadPath))
                 {
@@ -46,8 +57,7 @@ namespace LF12.Controllers
                     await uploadedImage.CopyToAsync(fileStream);
                 }
 
-                // Bereite das Bild fürs Lösen vor
-                ImageHelper.CreateTileImages(filePath, uniqueId);
+                // Bereite das Bild fürs Lösen vor und speichere
                 crossgrid.SetData();
                 model.FileName = fileName;
                 model.Message = "Bild erfolgreich hochgeladen!";
