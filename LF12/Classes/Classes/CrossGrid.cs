@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Drawing;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,7 +30,14 @@ namespace LF12.Classes.Classes
                     this._Grid = new CrossGridTile[this.DimensionX, this.DimensionY];
                     foreach (var tile in this.Tiles)
                     {
-                        this._Grid[tile.PosX, tile.PosY] = tile;
+                        if(this.DimensionX > tile.PosX && this.DimensionY > tile.PosY)
+                        {
+                            this._Grid[tile.PosX, tile.PosY] = tile;
+                        }
+                        else
+                        {
+                            throw new Exception("Index liegt außerhalb des Grids");
+                        }
                     }
                 }
                 return this._Grid;
@@ -82,13 +90,14 @@ namespace LF12.Classes.Classes
         #region Data Methods
         public void SetData()
         {
-
             ImageHelper.CreateTileImages(Path.Combine("Images", "Uploaded", this.Id.ToString().ToUpper() + "_RAW.png"), this.Id.ToString().ToUpper());
             string filePath = Path.Combine(ImageHelper.SolutionPath, this.Id.ToString().ToUpper());
             SetDimensions(filePath);
+            StringBuilder file = new StringBuilder();
             for(int i = 0; i<  this.Tiles.Count; i++)
             {
                 var tile = this.Tiles[i];
+                file.AppendLine($"[{tile.PosX},{tile.PosY}]: {tile.TileText}");
                 if(tile != null && string.IsNullOrWhiteSpace(tile.TileText))
                 {
                     var a = ImageHelper.DetectArrows(tile, this);
@@ -101,6 +110,7 @@ namespace LF12.Classes.Classes
                         this.Arrows.AddRange(a);
                     }
                 }
+                File.WriteAllText(Path.Combine(filePath, "Texte.txt"), file.ToString());
             }
             SaveJson();
         }
@@ -115,13 +125,33 @@ namespace LF12.Classes.Classes
         private void SetDimensions(string filePath)
         {
             var files = Directory.GetFiles(filePath);
-            var pos = Tuple.Create(0, 0);
+            var pos = new Point(0, 0);
+            foreach (var file in files)
+            {
+                if (Regex.IsMatch(file, @"cell_\d+_\d+"))
+                {
+                    pos = GetPos(file);
+                    var cgt = CrossGridTile.CreateInstance(pos.X, pos.Y, file);
+                    this.Tiles.Add(cgt);
+                }
+            }
+            // +1 Wegen 0 Based Index
+            this.DimensionX = pos.X + 1;
+            this.DimensionY = pos.Y + 1;
+        }
+        private void SetDimensionsAsync(string filePath)
+        {
+            var files = Directory.GetFiles(filePath);
+            var pos = new Point(0, 0);
             var tasks = new List<Task<CrossGridTile>>();    
             foreach (var file in files)
             {
-                pos = GetPos(file);
-                var cgt = CrossGridTile.CreateInstance(pos.Item1, pos.Item2, file);
-                tasks.Add(cgt);
+                if (Regex.IsMatch(file, @"cell_\d+_\d+"))
+                {
+                    pos = GetPos(file);
+                    var cgt = CrossGridTile.CreateInstanceAsync(pos.X, pos.Y, file);
+                    tasks.Add(cgt);
+                }
             }
             Task.WaitAll(tasks.ToArray());
             foreach (var task in tasks)
@@ -133,19 +163,19 @@ namespace LF12.Classes.Classes
             }
 
             // +1 Wegen 0 Based Index
-            this.DimensionX = pos.Item1 + 1; 
-            this.DimensionY = pos.Item2 + 1;
+            this.DimensionX = pos.X + 1; 
+            this.DimensionY = pos.Y + 1;
         }
-        private Tuple<int,int> GetPos(string fileName)
+        private Point GetPos(string fileName)
         {
             // Tuple ( PosX , PosY)
             var pattern = new Regex("cell_(\\d+)_(\\d+)");
             var match = pattern.Match(fileName);
             if (match.Success && match.Groups.Count >= 2)
             {
-                return Tuple.Create(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[1].Value));
+                return new Point(int.Parse(match.Groups[2].Value), int.Parse(match.Groups[1].Value));
             }
-            return Tuple.Create(0, 0);
+            return new Point(0, 0);
         }
         #endregion
 
@@ -158,6 +188,14 @@ namespace LF12.Classes.Classes
                 ret = Guid.NewGuid();
             }
             return ret;
+        }
+        public CrossGridTile? Get(int  tileX, int tileY)
+        {
+            if(this.Grid.GetLength(0)>tileX && this.Grid.GetLength(1) > tileY)
+            {
+                return this.Grid[tileX, tileY];
+            }
+            return null;
         }
         #endregion
 
@@ -176,7 +214,7 @@ namespace LF12.Classes.Classes
             }
             path = Path.Combine(path, this.Id.ToString().ToUpper() + "_RAW.json");
             File.WriteAllText(path, this.ToJson());
-            DeleteTemporaryImageFiles();
+            //DeleteTemporaryImageFiles();
         }
         private string ToJson()
         {
@@ -233,13 +271,13 @@ namespace LF12.Classes.Classes
                 case ArrowDirection.Right:
                     if(tile.PosX < this.DimensionX - 1)
                     {
-                        return this.Grid[tile.PosX + 1, tile.PosY];
+                        return this.Get(tile.PosX + 1, tile.PosY);
                     }
                     return null;
                 case ArrowDirection.Down:
                     if(tile.PosY < this.DimensionY - 1)
                     {
-                        return this.Grid[tile.PosX, tile.PosY + 1];
+                        return this.Get(tile.PosX, tile.PosY + 1);
                     }
                     return null;
                 case ArrowDirection.Left:

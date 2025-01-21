@@ -4,6 +4,7 @@ namespace LF12.Classes.Classes
 {
     public enum ArrowDirection
     {
+        None = 0,
         Left = 1,
         Right = 2,
         Up = 3,
@@ -12,7 +13,8 @@ namespace LF12.Classes.Classes
     public class Arrow
     {
         [JsonPropertyName(nameof(Origin))]
-        public CrossGridTile Origin { get; set; }
+        public CrossGridTile? Origin { get; set; }
+        public ArrowDirection OriginDirection { get; set; }
 
         [JsonPropertyName(nameof(ArrowTile))]
         public CrossGridTile ArrowTile { get; set; }

@@ -27,19 +27,32 @@ namespace LF12.Classes.Classes
         #endregion
 
         #region Async Methods
-        public static async Task<CrossGridTile> CreateInstance(int posx, int posy, string filepath)
+        public static CrossGridTile CreateInstance(int posx, int posy, string filepath)
+        {
+            var ret = new CrossGridTile();
+            ret.FilePath = filepath;
+            ret.PosX = posx;
+            ret.PosY = posy;
+            ret.SetText(filepath);
+            return ret;
+        }
+        public static async Task<CrossGridTile> CreateInstanceAsync(int posx, int posy, string filepath)
         {
             
             var ret = new CrossGridTile();
             ret.FilePath = filepath;
             ret.PosX = posx;
             ret.PosY = posy;
-            await ret.SetText(filepath);
+            await ret.SetTextAsync(filepath);
             return ret;
         }
-        public async Task SetText(string filepath)
+        public void SetText(string filepath)
         {
-            string? text = await ImageHelper.GetText(filepath);
+            this.TileText = ImageHelper.GetText(filepath);
+        }
+        public async Task SetTextAsync(string filepath)
+        {
+            string? text = await ImageHelper.GetTextAsync(filepath);
             this.TileText = text;
         }
         public void SetChar(char c)

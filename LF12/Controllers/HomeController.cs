@@ -1,10 +1,14 @@
-﻿using LF12.Classes.Classes;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using LF12.Classes.Classes;
 using LF12.Classes.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using Tesseract;
 
 namespace LF12.Controllers
 {
@@ -20,16 +24,6 @@ namespace LF12.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            bool skip = true;
-            if(!skip)
-                return View(new ImageUploadModel());
-            string guid = "D1D22F07-6C3F-42B7-B092-B81B8613059D";
-            var json = System.IO.File.ReadAllText(Path.Combine("Jsons", guid, $"{guid}_RAW.json"));
-            var cg = CrossGrid.FromJson(json);
-            if (cg != null)
-            {
-                cg.Solve();
-            }
             return View(new ImageUploadModel());
         }
 
