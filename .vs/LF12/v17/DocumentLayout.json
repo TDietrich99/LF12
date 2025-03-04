@@ -100,7 +100,7 @@
               "RelativeDocumentMoniker": "LF12\\Program.cs",
               "ToolTip": "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\Program.cs",
               "RelativeToolTip": "LF12\\Program.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACAAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T09:28:10.505Z",
               "EditorCaption": ""
@@ -115,8 +115,7 @@
               "RelativeToolTip": "..\\..\\..\\AppData\\Roaming\\NuGet\\NuGet.Config",
               "ViewState": "AgIAAAoAAAAAAAAAAAAAwBsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-09-04T11:10:37.45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-04T11:10:37.45Z"
             },
             {
               "$type": "Document",
@@ -128,8 +127,7 @@
               "RelativeToolTip": "LF12\\LF12.csproj",
               "ViewState": "AgIAAAIAAAAAAAAAAAAcwA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-09-03T08:30:36.727Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-03T08:30:36.727Z"
             },
             {
               "$type": "Document",
@@ -153,8 +151,7 @@
               "RelativeToolTip": "LF12\\Data\\ApplicationDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-03T08:32:56.092Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-03T08:32:56.092Z"
             },
             {
               "$type": "Document",
