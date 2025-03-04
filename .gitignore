@@ -4,6 +4,7 @@
 
 /LF12/Images/*
 /LF12/Jsons/*
+/LF12/bin/
 /LF12/obj/
 /LF12/obj/Debug/net8.0/LF12.csproj.FileListAbsolute.txt
 /LF12/obj/Debug/net8.0/LF12.AssemblyInfoInputs.cache
