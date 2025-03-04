@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\LF12.csproj": {}
+    "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\LF12.csproj": {}
   },
   "projects": {
-    "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\LF12.csproj": {
+    "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\LF12.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\LF12.csproj",
+        "projectUniqueName": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\LF12.csproj",
         "projectName": "LF12",
-        "projectPath": "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\LF12.csproj",
-        "packagesPath": "C:\\Users\\mga\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\mga\\Documents\\GruppenAufgabeTobias\\Programm\\LF12\\obj\\",
+        "projectPath": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\LF12.csproj",
+        "packagesPath": "C:\\Users\\Dietrich\\.nuget\\packages\\",
+        "outputPath": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\mga\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dietrich\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -39,11 +43,34 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Emgu.CV": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
+            "Emgu.CV.Bitmap": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
+            "Emgu.CV.runtime.windows": {
+              "target": "Package",
+              "version": "[4.9.0.5494, )"
+            },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[8.0.8, )"
+            },
+            "Tesseract": {
+              "target": "Package",
+              "version": "[5.2.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -63,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

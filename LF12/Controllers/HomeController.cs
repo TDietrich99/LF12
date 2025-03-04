@@ -1,9 +1,14 @@
-﻿using LF12.Classes.Models;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using LF12.Classes.Classes;
+using LF12.Classes.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+using Tesseract;
 
 namespace LF12.Controllers
 {
@@ -29,16 +34,25 @@ namespace LF12.Controllers
 
             if (uploadedImage != null && uploadedImage.Length > 0)
             {
-                var uploadPath = Path.Combine(_hostEnvironment.ContentRootPath, "images");
-                var fileName = Path.GetFileName(uploadedImage.FileName);
+
+                var uploadPath = Path.Combine(_hostEnvironment.ContentRootPath, "Images","Uploaded");
+                if (!Directory.Exists(uploadPath))
+                {
+                    Directory.CreateDirectory(uploadPath);
+                }
+                var crossgrid = new CrossGrid();
+                string uniqueId = crossgrid.Id.ToString().ToUpper();
+                var fileName = uniqueId + "_RAW.png";
                 var filePath = Path.Combine(uploadPath, fileName);
 
-                // Speichere das Bild im Ordner "wwwroot/images"
+                // Speichere das Bild im Ordner "Images/Uploaded"
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
                     await uploadedImage.CopyToAsync(fileStream);
                 }
 
+                // Bereite das Bild fürs Lösen vor und speichere
+                crossgrid.SetData();
                 model.FileName = fileName;
                 model.Message = "Bild erfolgreich hochgeladen!";
                 model.FilePath = filePath;
