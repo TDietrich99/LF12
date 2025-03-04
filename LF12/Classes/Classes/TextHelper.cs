@@ -149,7 +149,7 @@ namespace LF12.Classes.Classes
         {
             var path = "/";
             string datapath = path + Path.DirectorySeparatorChar + "tessdata";
-            datapath = @"C:\Users\Dietrich\Downloads\tessdata-4.1.0\tessdata-4.1.0";
+            datapath = Directory.GetCurrentDirectory() + @"\tessdata-4.1.0\tessdata-4.1.0";
             Mat gray = new Mat();
             gray = fullImg;
             //CvInvoke.CvtColor(fullImg, gray, ColorConversion.Bgr2Gray);
