@@ -51,5 +51,29 @@ namespace LF12.Controllers
             // Rückgabe an die Index-View
             return View("Index", model);
         }
+
+        [HttpGet]
+        public IActionResult SingleQuestions()
+        {
+            return View(new SingleQuestionsModel()); 
+        }
+
+        [HttpPost]
+        public IActionResult SolveRiddle(SingleQuestionsModel model)
+        {
+                string question = model.Question;
+                int answerLength = model.AnswerLength;
+
+                string answer = FindAnswer(question, answerLength);
+                model.Answer = answer;
+            
+            return View("SingleQuestions", model); // Rückgabe an die SingleQuestion-View
+        }
+
+
+        private string FindAnswer(string question, int answerLength)
+        {
+            return "Beispielantwort";
+        }
     }
 }

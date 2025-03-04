@@ -1,4 +1,6 @@
 using LF12.Classes; // Importiere die RouteConfig Klasse
+using LF12.Data;    // Importiere den ApplicationDbContext
+using Microsoft.EntityFrameworkCore; // Für die DbContext-Konfiguration
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,10 +10,11 @@ builder.Services.AddControllersWithViews()
     {
         // Füge den zusätzlichen View-Suchpfad hinzu
         options.ViewLocationFormats.Add("/Views/Pages/{0}.cshtml");
-        // Weitere Pfade können bei Bedarf hinzugefügt werden
     });
 
 builder.Services.AddRazorPages();
+
+
 
 var app = builder.Build();
 
@@ -29,10 +32,11 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-// Routen in separater Datei registrieren
 app.UseEndpoints(endpoints =>
 {
-    RouteConfig.RegisterRoutes(endpoints); // Aufruf der RegisterRoutes Methode
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
 app.MapRazorPages();
