@@ -2,4 +2,6 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/LF12/Images/Solution/engl.
+/LF12/Images/*
+/LF12/Jsons/*
+/LF12/obj/*
