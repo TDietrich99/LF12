@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Emgu.CV;
+using Emgu.CV.CvEnum;
+using Microsoft.AspNetCore.Identity;
 using System.Drawing;
 using System.Net.Http.Json;
 using System.Runtime.CompilerServices;
@@ -90,6 +92,16 @@ namespace LF12.Classes.Classes
         #region Data Methods
         public void SetData()
         {
+            Mat full = CvInvoke.Imread(Path.Combine("Images", "Uploaded", this.Id.ToString().ToUpper() + "_RAW.png"), ImreadModes.Grayscale);
+            var ti = ImageHelp.CreateTileImages(full, this.Id);
+            var tilesSorted = ti.OrderBy(y => y.Item2.y).ThenBy(x => x.Item2.x).ToList();
+            List<Tile> tiles = new List<Tile>();
+            foreach(var tile in tilesSorted)
+            {
+                var t = ImageHelp.GetTile(tile);
+                tiles.Add(t);
+            }
+            //----//----//----//----//----//----//----//----//----//----//----//----//----//
             ImageHelper.CreateTileImages(Path.Combine("Images", "Uploaded", this.Id.ToString().ToUpper() + "_RAW.png"), this.Id.ToString().ToUpper());
             string filePath = Path.Combine(ImageHelper.SolutionPath, this.Id.ToString().ToUpper());
             SetDimensions(filePath);
@@ -191,6 +203,8 @@ namespace LF12.Classes.Classes
         }
         public CrossGridTile? Get(int  tileX, int tileY)
         {
+            if (tileX < 0 || tileY < 0)
+                return null;
             if(this.Grid.GetLength(0)>tileX && this.Grid.GetLength(1) > tileY)
             {
                 return this.Grid[tileX, tileY];

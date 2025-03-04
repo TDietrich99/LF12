@@ -8,6 +8,8 @@ namespace LF12.Classes.Classes
     public class CrossGridTile
     {
         #region Properties
+        bool HasArrow { get; set; }
+        bool HasQuestion { get; set; }
         [JsonPropertyName(nameof(PosX))]
         public int PosX { get; set; }
 

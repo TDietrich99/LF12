@@ -39,22 +39,29 @@ namespace LF12.Classes.Classes
                 Arrow tmp = arrs[i];
                 tmp.ArrowTile = tile;
                 CrossGridTile arrowOrg = null;
-                switch (tmp.OriginDirection)
+                try
                 {
-                    case ArrowDirection.Left:
-                        arrowOrg =  g.Get(tile.PosX - 1, tile.PosY); 
-                        break;
-                    case ArrowDirection.Right:
-                        arrowOrg = g.Get(tile.PosX + 1, tile.PosY);
-                        break;
-                    case ArrowDirection.Up:
-                        arrowOrg = g.Get(tile.PosX, tile.PosY - 1);
-                        break;
-                    case ArrowDirection.Down:
-                        arrowOrg = g.Get(tile.PosX, tile.PosY + 1);
-                        break;
-                    case ArrowDirection.None:
-                        throw new Exception("WTF");
+
+                    switch (tmp.OriginDirection)
+                    {
+                        case ArrowDirection.Left:
+                            arrowOrg =  g.Get(tile.PosX - 1, tile.PosY); 
+                            break;
+                        case ArrowDirection.Right:
+                            arrowOrg = g.Get(tile.PosX + 1, tile.PosY);
+                            break;
+                        case ArrowDirection.Up:
+                            arrowOrg = g.Get(tile.PosX, tile.PosY - 1);
+                            break;
+                        case ArrowDirection.Down:
+                            arrowOrg = g.Get(tile.PosX, tile.PosY + 1);
+                            break;
+                        case ArrowDirection.None:
+                            throw new Exception("WTF");
+                    }
+                }catch(ArgumentOutOfRangeException e)
+                {
+                    Debug.WriteLine(e.Message);
                 }
                 tmp.Origin = arrowOrg;
                 ret.Add(tmp);
@@ -68,6 +75,7 @@ namespace LF12.Classes.Classes
             int width = m.Width;
             Rectangle crop = new Rectangle(cutPixel, cutPixel, width - 2*cutPixel, height - 2*cutPixel);
             Mat cropped = new Mat(m, crop);
+            cropped.Save(Path.Combine("Images", "Debug", $"SubImg_org.png"));
             int cellWidth = cropped.Width / 3;
             int cellHeight = cropped.Height / 3;
             // Bild in 3x3 Raster aufteilen
@@ -87,7 +95,7 @@ namespace LF12.Classes.Classes
 
                     // Teilbild erstellen
                     Mat tmp = new Mat(cropped, roi);
-                    
+                    tmp.Save(Path.Combine("Images", "Debug", $"SubImg_{row}_{col}.png"));
                     int weißePixel = CvInvoke.CountNonZero(tmp);
                     int pixel = tmp.Width * tmp.Height;
                     float ratio = 1-(float)weißePixel / pixel;
@@ -288,29 +296,6 @@ namespace LF12.Classes.Classes
             foreach(var trapezPoints in trapezesPoints)
             {
                 Rectangle boundingRect = CvInvoke.BoundingRectangle(new VectorOfPoint(trapezPoints));
-                // boundingRect etwas erweitern
-                //boundingRect.Y -= 2;
-                //boundingRect.X -= 2;
-                //boundingRect.Height += 4;
-                //boundingRect.Width += 4;
-                //if(boundingRect.X < 0)
-                //{
-                //    boundingRect.Width += boundingRect.X;
-                //    boundingRect.X = 0;
-                //}
-                //if(boundingRect.Y < 0)
-                //{
-                //    boundingRect.Height += boundingRect.Y;
-                //    boundingRect.Y = 0;
-                //}
-                //if(boundingRect.X + boundingRect.Width > img.Width)
-                //{
-                //    boundingRect.Width = img.Width - boundingRect.X;
-                //}
-                //if(boundingRect.Y + boundingRect.Height > img.Height)
-                //{
-                //    boundingRect.Y = img.Height - boundingRect.Y;
-                //}
                 Mat cell = new Mat(img, boundingRect);
                 Point coords = GetTileCoordinates(trapezPoints, trapezesPoints);
                 string cellImagePath = $"cell_{PadLeft(coords.Y)}_{PadLeft(coords.X)}.png";

@@ -2,7 +2,7 @@
   "Files": [
     {
       "Id": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\LF12.bundle.scp.css",
-      "PackagePath": "staticwebassets\\LF12.bundle.scp.css"
+      "PackagePath": "staticwebassets\\LF12.g8z4dbiwoy.bundle.scp.css"
     },
     {
       "Id": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\wwwroot\\css\\site.css",
@@ -243,6 +243,10 @@
     {
       "Id": "C:\\Daten\\Schule\\Lernfeld 12\\LF12 Repos\\LF12\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.LF12.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.LF12.Microsoft.AspNetCore.StaticWebAssets.props",
