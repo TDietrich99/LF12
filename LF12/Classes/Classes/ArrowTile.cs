@@ -16,7 +16,7 @@ namespace LF12.Classes.Classes
                     throw new Exception("....");
                 }
                 QuestionTile qtile = tile as QuestionTile;
-                qtile.ArrowTile = this.Pos;
+                qtile.ArrowTile = this;
             }
         }
     }

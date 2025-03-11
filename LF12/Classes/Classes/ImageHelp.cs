@@ -24,6 +24,7 @@ namespace LF12.Classes.Classes
     {
         public static int MinResolution = 25; //px 
         public static int NoiseReduction = 15;
+        public const float MIN_BLACKNESS = 0.03f;
         public static string SolutionPath = Path.Combine("Images", "Solution");
         public static List<Tuple<Mat,Position>> CreateTileImages(Mat fullImage, Guid CrossGridId)
         {
@@ -235,7 +236,7 @@ namespace LF12.Classes.Classes
         #endregion
 
         #region TileDetection
-        public static Tile GetTile(Tuple<Mat,Position> tileImg_Pos)
+        public static Tile GetTile(Tuple<Mat,Position> tileImg_Pos, Position max_Dim)
         {
             string? textInTile = TextHelper.GetText(tileImg_Pos.Item1);
             if (!string.IsNullOrWhiteSpace(textInTile))
@@ -250,7 +251,7 @@ namespace LF12.Classes.Classes
             }
             else
             {
-                var arrs = FindArrows(tileImg_Pos.Item1, tileImg_Pos.Item2);
+                var arrs = FindArrows(tileImg_Pos.Item1, tileImg_Pos.Item2, max_Dim);
                 if(arrs.Count > 0)
                 {
                     return new ArrowTile
@@ -271,10 +272,10 @@ namespace LF12.Classes.Classes
         #endregion
 
         #region Arrows
-        public static List<Arrows> FindArrows(Mat m, Position currentTilePos)
+        public static List<Arrows> FindArrows(Mat m, Position currentTilePos, Position max_Dim)
         {
             var ret = new List<Arrows>();
-            int cutPixel = 6;
+            int cutPixel = 25;
             int height = m.Height;
             int width = m.Width;
             Rectangle crop = new Rectangle(cutPixel, cutPixel, width - 2 * cutPixel, height - 2 * cutPixel);
@@ -299,10 +300,11 @@ namespace LF12.Classes.Classes
 
                     // Teilbild erstellen
                     Mat tmp = new Mat(cropped, roi);
+                    tmp.Save(Path.Combine("Images", "Debug", $"SubImg_{row}_{col}.png"));
                     int weißePixel = CvInvoke.CountNonZero(tmp);
                     int pixel = tmp.Width * tmp.Height;
                     float ratio = 1 - (float)weißePixel / pixel;
-                    ratios[row, col] = ratio;
+                    ratios[row, col] = ratio > MIN_BLACKNESS ? ratio : 0;
                 }
             }
 
@@ -338,6 +340,14 @@ namespace LF12.Classes.Classes
                         y = currentTilePos.y - 1
                     };
                 }
+                if (arr.ArrowOrigin.x < 0 || arr.ArrowOrigin.y < 0) 
+                { 
+                    throw new Exception("WTF warum kleiner 0?");
+                }
+                if (arr.ArrowOrigin.x >= max_Dim.x || arr.ArrowOrigin.y >= max_Dim.y)
+                {
+                    throw new Exception("WTF warum größer max?");
+                }
                 ret.Add(arr);
             }
             // Prüfe 1,0
@@ -370,6 +380,14 @@ namespace LF12.Classes.Classes
                         x = currentTilePos.x - 1,
                         y = currentTilePos.y
                     };
+                }
+                if (arr.ArrowOrigin.x < 0 || arr.ArrowOrigin.y < 0)
+                {
+                    throw new Exception("WTF warum kleiner 0?");
+                }
+                if (arr.ArrowOrigin.x >= max_Dim.x || arr.ArrowOrigin.y >= max_Dim.y)
+                {
+                    throw new Exception("WTF warum größer max?");
                 }
                 ret.Add(arr);
             }
