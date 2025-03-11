@@ -4,13 +4,16 @@ using Emgu.CV.Structure;
 using Emgu.CV.Util;
 using System.Diagnostics;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace LF12.Classes.Classes
 {
     public struct Position
     {
-        public int x;
-        public int y;
+        [JsonPropertyName(nameof(x))]
+        public int x { get; set; }
+        [JsonPropertyName(nameof(y))]
+        public int y { get; set; }
         public Position(int x, int y)
         {
             this.x = x;
@@ -19,7 +22,8 @@ namespace LF12.Classes.Classes
     }
     public class ImageHelp
     {
-
+        public static int MinResolution = 25; //px 
+        public static int NoiseReduction = 15;
         public static string SolutionPath = Path.Combine("Images", "Solution");
         public static List<Tuple<Mat,Position>> CreateTileImages(Mat fullImage, Guid CrossGridId)
         {
@@ -56,12 +60,12 @@ namespace LF12.Classes.Classes
             List<int> yCoords = new List<int>();
             foreach (var point in filtered)
             {
-                var xs = xCoords.Where(x => Math.Abs(point.X - x) < ImageHelper.NoiseReduction).ToArray();
+                var xs = xCoords.Where(x => Math.Abs(point.X - x) < ImageHelp.NoiseReduction).ToArray();
                 if (xs.Length == 0)
                 {
                     xCoords.Add(point.X);
                 }
-                var ys = yCoords.Where(y => Math.Abs(point.Y - y) < ImageHelper.NoiseReduction).ToArray();
+                var ys = yCoords.Where(y => Math.Abs(point.Y - y) < ImageHelp.NoiseReduction).ToArray();
                 if (ys.Length == 0)
                 {
                     yCoords.Add(point.Y);
@@ -121,7 +125,7 @@ namespace LF12.Classes.Classes
             intersection = Point.Empty;
 
             // Nur lang genuge Linien erlauben (Kästen)
-            if (line1.Length<ImageHelper.MinResolution || line2.Length<ImageHelper.MinResolution)
+            if (line1.Length<ImageHelp.MinResolution || line2.Length<ImageHelp.MinResolution)
                 return false;
 
             float a1 = line1.P2.Y - line1.P1.Y;
@@ -147,8 +151,8 @@ namespace LF12.Classes.Classes
 
             int pointsWithSmallerX = 0;
             int pointsWithSmallerY = 0;
-            pointsWithSmallerX = allTiles.Where(t => t[0].X < currTile[0].X && Math.Abs(t[0].Y - currTile[0].Y) < ImageHelper.NoiseReduction).Count();
-            pointsWithSmallerY = allTiles.Where(t => t[0].Y < currTile[0].Y && Math.Abs(t[0].X - currTile[0].X) < ImageHelper.NoiseReduction).Count();
+            pointsWithSmallerX = allTiles.Where(t => t[0].X < currTile[0].X && Math.Abs(t[0].Y - currTile[0].Y) < ImageHelp.NoiseReduction).Count();
+            pointsWithSmallerY = allTiles.Where(t => t[0].Y < currTile[0].Y && Math.Abs(t[0].X - currTile[0].X) < ImageHelp.NoiseReduction).Count();
             return new Point(pointsWithSmallerX, pointsWithSmallerY);
 
         }
@@ -169,17 +173,17 @@ namespace LF12.Classes.Classes
 
                 // 1. Punkt rechts von p (X > p.X)
                 var pointRight = points
-                    .Where(pt => pt.X - p.X > ImageHelper.NoiseReduction && pt != p)
+                    .Where(pt => pt.X - p.X > ImageHelp.NoiseReduction && pt != p)
                     .OrderBy(pt => Distance(p, pt));
 
                 // 2. Punkt unterhalb von p (Y > p.Y)
                 var pointBelow = points
-                    .Where(pt => pt.Y - p.Y > ImageHelper.NoiseReduction && pt != p)
+                    .Where(pt => pt.Y - p.Y > ImageHelp.NoiseReduction && pt != p)
                     .OrderBy(pt => Distance(p, pt));
 
                 // 3. Punkt diagonal unten rechts von p (X > p.X und Y > p.Y)
                 var pointDiagonal = points
-                    .Where(pt => pt.X - p.X > ImageHelper.NoiseReduction && pt.Y - p.Y > ImageHelper.NoiseReduction && pt != p)
+                    .Where(pt => pt.X - p.X > ImageHelp.NoiseReduction && pt.Y - p.Y > ImageHelp.NoiseReduction && pt != p)
                     .OrderBy(pt => Distance(p, pt));
 
                 // Passenden Punkte für ein Trapez gefunden
@@ -208,7 +212,7 @@ namespace LF12.Classes.Classes
             var ret = new List<Point>(points);
             foreach (Point point in points)
             {
-                var close = ret.Where(p => Math.Abs(p.X - point.X) < ImageHelper.NoiseReduction && Math.Abs(p.Y - point.Y) < ImageHelper.NoiseReduction).ToArray();
+                var close = ret.Where(p => Math.Abs(p.X - point.X) < ImageHelp.NoiseReduction && Math.Abs(p.Y - point.Y) < ImageHelp.NoiseReduction).ToArray();
                 if (close.Length != 0)
                 {
                     int x = 0;

@@ -43,7 +43,7 @@ namespace LF12.Classes.Classes
             {
                 // Bounding-Box um die Kontur erstellen
                 Rectangle rect = CvInvoke.BoundingRectangle(contours[i]);
-                if (rect.Height > ImageHelper.NoiseReduction)
+                if (rect.Height > ImageHelp.NoiseReduction)
                 {
                     contoursRect.Add(rect);
                     if (!string.IsNullOrWhiteSpace(cell))
@@ -99,7 +99,7 @@ namespace LF12.Classes.Classes
                 else
                 {
                     // Prüfe, ob das Rechteck zur aktuellen Gruppe passt (basierend auf Y-Koordinate und Toleranz)
-                    if (Math.Abs(rect.Y - currentGroup.Last().Y) < ImageHelper.NoiseReduction)
+                    if (Math.Abs(rect.Y - currentGroup.Last().Y) < ImageHelp.NoiseReduction)
                     {
                         currentGroup.Add(rect);
                     }
@@ -128,7 +128,7 @@ namespace LF12.Classes.Classes
                 //Maximaler Y Wert in Gruppe
                 int ysum = 0;
                 int hsum = 0;
-                int minX = ImageHelper.NoiseReduction;
+                int minX = ImageHelp.NoiseReduction;
                 foreach (var rect in group)
                 {
                     ysum += rect.Y;
@@ -137,8 +137,8 @@ namespace LF12.Classes.Classes
                         minX = rect.X;
                 }
                 var rec = new Rectangle(minX, ysum / group.Count(), imgWidth - minX, hsum / group.Count());
-                rec.Y -= ImageHelper.NoiseReduction;
-                rec.Height += ImageHelper.NoiseReduction * 2;
+                rec.Y -= ImageHelp.NoiseReduction;
+                rec.Height += ImageHelp.NoiseReduction * 2;
                 ret.Add(rec);
             }
             return ret;
