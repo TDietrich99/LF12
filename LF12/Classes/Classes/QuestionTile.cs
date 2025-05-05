@@ -84,7 +84,7 @@ namespace LF12.Classes.Classes
         }
         public void SetQuestionLength(List<Tile> tiles)
         {
-            ArrowTile? arrTile = tiles.Where(t => t.PosX == this.ArrowTile.x && t.PosY == this.ArrowTile.y).First() as ArrowTile;
+            ArrowTile? arrTile = tiles.Where(t => t.PosX == this.ArrowTile.Pos.x && t.PosY == this.ArrowTile.Pos.y).First() as ArrowTile;
             if(arrTile == null)
             {
                 throw new Exception("WTF warum ist das hier null????");

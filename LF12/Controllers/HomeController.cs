@@ -16,9 +16,11 @@ namespace LF12.Controllers
     {
         private readonly IWebHostEnvironment _hostEnvironment;
 
-        public HomeController(IWebHostEnvironment hostEnvironment)
+        private readonly MongoQuestionService _mongoService;
+        public HomeController(IWebHostEnvironment hostEnvironment, MongoQuestionService mongoService)
         {
             _hostEnvironment = hostEnvironment;
+            _mongoService = mongoService;
         }
 
         [HttpGet]
